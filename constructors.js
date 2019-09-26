@@ -16,6 +16,11 @@
 
 // Code here
 
+function CarFactory(make, model){
+  this.make = make,
+  this.model = model
+}
+
 ////////// PROBLEM 2 //////////
 
 // Do not edit the code below.
@@ -34,35 +39,62 @@ function Employee(name, email, hireDate) {
 */
 
 // Code here
+let bob = new Employee('Bob', 'bob@gmail.com', '01-02-98' );
+console.log(bob)
 
 ////////// PROBLEM 3 //////////
 
 // Do not edit the code below.
 
-var prius = new Car('Toyota', 'Prius', 2011);
-var mustang = new Car('Ford', 'Mustang', 2013);
+var prius = new Car('Toyota', 'Prius', 2011, 0);
+var mustang = new Car('Ford', 'Mustang', 2013, 0);
+console.log(prius.moveCar())
 prius.moveCar(); // Increments prius' move property by 10. Returns the new move property.
+console.log(prius)
 mustang.moveCar(); // Increments mustang' move property by 10. Returns the new move property.
 
 // Do not edit the code above.
 
 /*
-  Write a constructor function, including method definitions, which will make the above function invocations function properly.
+  Write a constructor function, including method definitions, 
+  which will make the above function invocations function properly.
 
   Hint: you'll need to add a move property,
-    with a starting value of zero, and write a moveCar function which will increment the move property by 10.
-  The move property will be added to every object that is being returned from the Car function.
+    with a starting value of zero, and write a moveCar function which will increment 
+    the move property by 10.
+  The move property will be added to every object that is being returned
+   from the Car function.
   You'll also need to use the 'this' keyword properly in order to make sure you're
     invoking moveCar on the right object (prius vs mustang).
 */
 
 // Code here
+function Car(car, make, year) {
+  this.car = car
+  this.make = make
+  this.year = year
+  let move = 0
+  this.moveCar = function (){
+    move = move + 10
+    return move
+  }
+  
+ 
+    
+    
+    
+  }
+  console.log(prius)
+  
+
+
 
 ////////// PROBLEM 4 //////////
 
 /*
   Here we have a constructor function named Movie that takes in 3 parameters:
-    name (a string), genre (a string), and rating (a number withing 1-100 that has been averaged out from previous given ratings).
+    name (a string), genre (a string), and rating (a number withing 1-100 that has 
+      been averaged out from previous given ratings).
   Write a prototype method for the Movie constructor function called changeRating.
   This method should take in a number as a parameter that will be a new rating.
   Find the average between the old rating and the new rating.
@@ -75,22 +107,59 @@ function Movie(name, genre, rating) {
   this.rating = rating;
 }
 
+Movie.prototype.changeRating = function(newRating, rating){
+  return(newRating + rating) / 2
+}
+
+console.log(Movie.prototype.changeRating(70, 89))
+
+
+
 // Code here
 
 ////////// PROBLEM 5 //////////
 
-// Write a constructor function called User. This function should take in 4 parameters called name, age, email, and savedPosts in that order. Name and email will be strings, age will be a number and savedPosts will be an array of objects. These objects will each have 3 properties: id (a number), title (a string), and rating (a number between 1 and 5). These objects are the posts that the user will have saved to their account.
+// Write a constructor function called User. This function should take in 4 parameters called name, age, email, and savedPosts in that order. Name and email will be strings, age will be a number and savedPosts will be an array of objects. 
+//These objects will each have 3 properties: id (a number), title (a string), and rating (a number between 1 and 5). These objects are the posts that the user will have saved to their account.
 
-// Once the User constructor function is created, write a prototype method for the User function. Name this method addSavedPost. It should take in three parameters: id (a number), title (a string) and rating (a number). Use these parameters to create a new object and add it to the savedPosts array. Make sure to name the properties the same as described previously (id, title, rating).
+// Once the User constructor function is created, write a prototype method for 
+//the User function. Name this method addSavedPost. It should take in three 
+//parameters: id (a number), title (a string) and rating (a number). Use 
+//these parameters to create a new object and add it to the savedPosts array. 
+//Make sure to name the properties the same as described previously 
+//(id, title, rating).
 
 // Code here
+function User(name, age, email, savedPosts) {
+  this.name = name
+  this.age = age
+  this.email = email
+  this.savedPosts = savedPosts
+}
+
+User.prototype.addSavedPost = function(id, title, rating) {
+  this.savedPosts.push({id, title, rating})
+}
+
+let john = new User('john', 32, "john@than")
+
+john.prototype.addSavedPost(1,'this is a post', 3)
+
+console.log(john)
 
 ////////// PROBLEM 6 //////////
 
 // You will be using the constructor function you just created in problem 5.
-// Write a prototype method for the User constructor function named removeSavedPost that will take in one number parameter representing the post id. Use this id to find and remove the matching object in the savedPosts array.
+// Write a prototype method for the User constructor function named
+// removeSavedPost that will take in one number parameter representing the 
+//post id. Use this id to find and remove the matching object in the savedPosts
+// array.
 
 // Code here
+User.prototype.removeSavedPost = function(id) {
+  this.savedPosts = this.savedPosts.filter(e => e.id !== id)
+}
+
 
 ////////// PROBLEM 7 //////////
 
@@ -98,3 +167,7 @@ function Movie(name, genre, rating) {
 // Write a prototype method for the User constructor function named changePostRating that will take in two number parameters. The first will be an id (a number) and the second will be the new rating (a number). Use the id to find the matching object in the savedPosts array. Once you find the matching object, update it's rating score with the new rating parameter.
 
 // Code here
+User.prototype.changePostRating = function(id, rating){
+  const index = this.savedPosts.findIndex(element => element.id === id)
+  this.savedPosts[index].rating = rating
+}
